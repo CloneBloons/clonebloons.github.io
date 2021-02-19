@@ -1,7 +1,7 @@
 Let's make a game!
 	name:Clone Armies Clicker
 	by:Clone Bloons
-	desc:This is a simple idle game to showcase some of the basic functionalities of Idle Game Maker.<//>Make bunnies and shoot for the stars!
+	desc:This is a simple idle game to showcase some of the basic functionalities of Idle Game Maker.<//>Generate blue coins and clone!
 	created:19/2/2021
 	updated:19/2/2021
 	version:1
@@ -30,7 +30,7 @@ Buttons
 		
 Resources
 	*bluecoin|bluecoin
-    name:Blue Coin|Blue Coins
+                name:Blue Coin|Blue Coins
 		desc:Blue coins are your resource. You need them to clone your army and upgrade!
 		icon:icons[0,0]
 		class:noBackground
@@ -83,8 +83,8 @@ Buildings
 		icon:https://static.wikia.nocookie.net/clone-armies/images/5/50/Commando.png/revision/latest/scale-to-width-down/224?cb=20201216172153
 		cost:25 bluecoins
 		on tick:yield 5 bluecoins
-		req:(private>=1)
-    cost increase:140%
+		req:1 private
+                cost increase:140%
 	
 	*cadet|cadets
 		name:Cadet|Cadets
@@ -92,8 +92,8 @@ Buildings
 		icon:https://static.wikia.nocookie.net/clone-armies/images/e/e9/Cadet.jpg/revision/latest/scale-to-width-down/91?cb=20201216203859
 		cost:100 bluecoins
 		on tick:yield 10 bluecoins
-		req:(commando>=1)
-    cost increase:135%
+		req:1 commando
+                cost increase:135%
 	
 	*infantry|infantrymen
 		name:Infantry|Infantrymen
@@ -101,8 +101,8 @@ Buildings
 		icon:https://static.wikia.nocookie.net/clone-armies/images/9/9f/Infantry.png/revision/latest/scale-to-width-down/295?cb=20201216204833
 		cost:500 bluecoins
 		on tick:yield 40 bluecoins
-		req:(cadet>=1)
-    cost increase:130%
+		req:1 cadet
+                cost increase:130%
 	
 	*marksman|marksmen
 		name:Marksman|Marksmen
@@ -110,26 +110,26 @@ Buildings
 		icon:https://static.wikia.nocookie.net/clone-armies/images/e/e7/Marksman.jpg/revision/latest/scale-to-width-down/113?cb=20201217155323
 		cost:2000 bluecoins
 		on tick:yield 100 bluecoins
-		req:(infantry>=1)
-    cost increase:125%
+		req:1 infantry
+                cost increase:125%
 	
 	*defender|defender
 		name:Defender|Defenders
 		desc:This tough guy with a shield is almost unstoppable, he can reflect all bullets and shoot down enemies.<//><b>Effect:</b><.>Earns 300 blue coins every second.
 		icon:https://static.wikia.nocookie.net/clone-armies/images/a/a5/Defender_with_shield.jpg/revision/latest/scale-to-width-down/112?cb=20201219141402
 		cost:8000 bluecoins
-    on tick:yield 300 bluecoins
-    req:(marksman>=1)
-    cost increase:122.5%
+                on tick:yield 300 bluecoins
+                req:1 marksman
+                cost increase:122.5%
 		
 	*pyro|pyros
 		name:Pyro|Pyros
 		desc:Don't mess with Pyro! His flamethrower's that strong to melt enemies and or... you.<//><b>Effect:</b><.>Earns 750 blue coins every second.
 		icon:https://static.wikia.nocookie.net/clone-armies/images/c/c8/Pyro.png/revision/latest/scale-to-width-down/323?cb=20201219142751
 		cost:30000 bluecoins
-    on tick:yield 750 bluecoins
-    req:(defender>=1)
-    cost increase:120%
+                on tick:yield 750 bluecoins
+                req:1 defender
+                cost increase:120%
 		
 	*powerup|powerups
 		name:Powerup|Powerups
@@ -137,9 +137,9 @@ Buildings
 		cost:1000000
     passive:multiply bluecoin yield of bluecoinButton by 2
 		passive:multiply yield of bluecoins by 2
-    req:100000 bluecoins:earned
-    limit:10
-    cost increase:10000%
+                req:100000 bluecoins:earned
+                limit:10
+                cost increase:10000%
 		
 Upgrades
 	*TEMPLATE
