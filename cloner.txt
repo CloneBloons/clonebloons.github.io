@@ -1,0 +1,322 @@
+Let's make a game!
+	name:Clone Armies Clicker
+	by:Clone Bloons
+	desc:This is a simple idle game to showcase some of the basic functionalities of Idle Game Maker.<//>Make bunnies and shoot for the stars!
+	created:19/2/2021
+	updated:19/2/2021
+	version:1
+
+Settings
+	background:https://static.wikia.nocookie.net/clone-armies/images/2/2f/Clone_your_army.png/revision/latest/scale-to-width-down/280?cb=20201215002306
+	building cost increase:115%
+	building cost refund:50%
+
+Layout
+	use default
+		
+Buttons
+	*bluecoinButton
+		name:Generate Blue Coins
+		desc:Click on the generator to make blue coins!
+		on click:anim icon wobble
+		on click:yield 1 bluecoin
+		on click:if (have goldenTouch and chance(1%)) yield 1 goldcoin
+		icon:https://static.wikia.nocookie.net/clone-armies/images/c/c2/Generator.png/revision/latest?cb=20201221193317
+		no text
+		class:bigButton hasFlares
+		icon class:shadowed
+		tooltip origin:bottom
+		tooltip class:red
+		
+Resources
+	*bluecoin|bluecoin
+    name:Blue Coin|Blue Coins
+		desc:Blue coins are your resource. You need them to clone your army and upgrade!
+		icon:icons[0,0]
+		class:noBackground
+		show earned
+		
+	*goldcoin|goldcoins
+		name:Gold Coin|Gold Coins
+		desc:These coins are rare, but possible to find! They are usefully to be honest.
+		icon:icons[0,1]
+		class:noBackground
+		hidden when 0
+		
+Shinies
+	*jubba
+		on click:log Woop
+		movement:onRight moveLeft fade bounce:0.05
+		frequency:60
+		frequency variation:30
+		icon:https://static.wikia.nocookie.net/clone-armies/images/c/cb/Current_Clone_Armies_Logo.jpg/revision/latest/scale-to-width-down/180?cb=20201215190144
+		class:bigButton
+		on click:
+			$boost=1
+			if (have supercool) $boost=4
+			if (chance(25%))
+				$amount=max(7,random(bluecoins:ps*60*1,bluecoins:ps*60*3))*$boost
+				toast Jubba gave you<//><b>[$amount] blue coins</b>.
+				yield $amount bluecoins
+			else
+				$amount=1*$boost
+				toast Jubba gave you<//><b>[$amount] gold coin[s?$amount]</b>!
+				yield $amount goldcoins
+			end
+		end
+
+Buildings
+	*TEMPLATE
+		on click:anim glow
+		
+	*private|privates
+		name:Private|Privates
+		desc:Private is your basic clone. Although he helps you battle enemy clones for blue coins.<//><b>Effect:</b><.>Earns 1 blue coin every second.
+		icon:https://static.wikia.nocookie.net/clone-armies/images/2/2f/Private.png/revision/latest/scale-to-width-down/270?cb=20201216135213
+		cost:10 bluecoins
+		on tick:yield 1 bluecoin
+		unlocked
+	
+	*commando|commandos
+		name:Commando|Commandos
+		desc:Commando is a specialist and he's a assassin that'll hurt enemies badly with his swords.<//><b>Effect:</b><.>Earns 5 blue coins every second.
+		icon:https://static.wikia.nocookie.net/clone-armies/images/5/50/Commando.png/revision/latest/scale-to-width-down/224?cb=20201216172153
+		cost:25 bluecoins
+		on tick:yield 5 bluecoins
+		req:(private>=1)
+    cost increase:140%
+	
+	*cadet|cadets
+		name:Cadet|Cadets
+		desc:Thanks to extensive training, Cadet can aim his weapon at his enemies even if he's standing on the ground or platform.<//><b>Effect:</b><.>Earns 10 blue coins every second.
+		icon:https://static.wikia.nocookie.net/clone-armies/images/e/e9/Cadet.jpg/revision/latest/scale-to-width-down/91?cb=20201216203859
+		cost:100 bluecoins
+		on tick:yield 10 bluecoins
+		req:(commando>=1)
+    cost increase:135%
+	
+	*infantry|infantrymen
+		name:Infantry|Infantrymen
+		desc:Armed with a deadly shotgun, Infantryman is the best at taking down squishy clones.<//><b>Effect:</b><.>Earns 40 blue coins every second.
+		icon:https://static.wikia.nocookie.net/clone-armies/images/9/9f/Infantry.png/revision/latest/scale-to-width-down/295?cb=20201216204833
+		cost:500 bluecoins
+		on tick:yield 40 bluecoins
+		req:(cadet>=1)
+    cost increase:130%
+	
+	*marksman|marksmen
+		name:Marksman|Marksmen
+		desc:When it comes to shooting, Marksman is one of the best sharpshooters. He can hit everything including enemies with a red hat on miles away.<//><b>Effect:</b><.>Earns 100 blue coins every second.
+		icon:https://static.wikia.nocookie.net/clone-armies/images/e/e7/Marksman.jpg/revision/latest/scale-to-width-down/113?cb=20201217155323
+		cost:2000 bluecoins
+		on tick:yield 100 bluecoins
+		req:(infantry>=1)
+    cost increase:125%
+	
+	*defender|defender
+		name:Defender|Defenders
+		desc:This tough guy with a shield is almost unstoppable, he can reflect all bullets and shoot down enemies.<//><b>Effect:</b><.>Earns 300 blue coins every second.
+		icon:https://static.wikia.nocookie.net/clone-armies/images/a/a5/Defender_with_shield.jpg/revision/latest/scale-to-width-down/112?cb=20201219141402
+		cost:8000 bluecoins
+    on tick:yield 300 bluecoins
+    req:(marksman>=1)
+    cost increase:122.5%
+		
+	*pyro|pyros
+		name:Pyro|Pyros
+		desc:Don't mess with Pyro! His flamethrower's that strong to melt enemies and or... you.<//><b>Effect:</b><.>Earns 750 blue coins every second.
+		icon:https://static.wikia.nocookie.net/clone-armies/images/c/c8/Pyro.png/revision/latest/scale-to-width-down/323?cb=20201219142751
+		cost:30000 bluecoins
+    on tick:yield 750 bluecoins
+    req:(defender>=1)
+    cost increase:120%
+		
+	*powerup|powerups
+		name:Powerup|Powerups
+		desc:Get this upgrade to bring mayhem to your clones and clicks!<//><b>Effect:</b><.>Doubles everything and doubles click power
+		cost:1000000
+    passive:multiply bluecoin yield of bluecoinButton by 2
+		passive:multiply yield of bluecoins by 2
+    req:100000 bluecoins:earned
+    limit:10
+    cost increase:10000%
+		
+Upgrades
+	*TEMPLATE
+		on click:anim glow
+    
+   //click upgrades
+	
+	*clicker1
+		name:Clicker I
+		desc:Generator's power is 10%.<//><b>Effect:</b><.>+1 blue coin/click
+		icon:icons[1,1]
+		cost:50 bluecoins
+		passive:increase bluecoin yield of bluecoinButton by 1
+		req:10 bluecoins:earned
+		
+	*clicker2
+		name:Clicker II
+		desc:Generator's power is 20%.<//><b>Effect:</b><.>+1 blue coin/click
+		icon:icons[1,2]
+		cost:100 bluecoins
+		passive:increase bluecoin yield of bluecoinButton by 1
+		req:50 bluecoins:earned
+		
+	*clicker3
+		name:Clicker III
+		desc:Generator's power is 30%.<//><b>Effect:</b><.>+2 blue coins/click
+		icon:icons[1,3]
+		cost:250 bluecoins
+		passive:increase bluecoin yield of bluecoinButton by 2
+		req:100 bluecoins:earned
+		
+	*clicker4
+		name:Clicker IV
+		desc:Generator's power is 40%.<//><b>Effect:</b><.>+2 blue coins/click
+		icon:icons[1,4]
+		cost:500 bluecoins
+		passive:increase bluecoin yield of bluecoinButton by 2
+		req:250 bluecoins:earned
+		
+	*clicker5
+		name:Clicker V
+		desc:Generator's power is 50%.<//><b>Effect:</b><.>Double blue coins/click
+		icon:icons[1,5]
+		cost:1000 bluecoins
+		passive:multiply bluecoin yield of bluecoinButton by 2
+		req:500 bluecoins:earned
+	
+	//clone upgrades
+	
+	*private1
+		name:Private I
+		desc:Privates are upgraded and they have better equipped stuff.<//><b>Effect:</b><.>Doubles Private's blue coins/sec
+		icon:icons[2,0] icons[3,0]
+		cost:1000 bluecoins
+		passive:multiply yield of private by 2
+		req:(privates>=10)
+		
+	//gold coin upgrades
+	
+	*goldenTouch
+		name:Golden touch
+		desc:Powerfully generator touch with a super low chance.<//><b>Effect:</b><.>1% chance of gaining 1 golden coin per generator click
+		icon:icons[2,5]
+		cost:1 goldcoin
+		req:1 goldcoin:earned
+		
+	*Jubbad
+		name:You were Jubbad
+		desc:Jubba's gonna find you. Jubba's gonna ban you.<//><b>Effect:</b><.>Jubbas appear 25% more often
+		icon:icons[2,6]
+		passive:multiply frequency of jubba by 0.75
+		cost:5 goldcoins
+		req:1 goldcoin:earned
+	
+	*extraPower
+		name:Extra Power
+		desc:All your clones and generator taps are gonna be supercharged for quick blue coins!<//><b>Effect:</b><.>Everything 50% more powerful
+		icon:icons[2,7]
+		cost:5 goldcoins
+    passive:multiply yield of bluecoins by 1.5
+		req:1 goldcoin:earned
+		
+	*supercool
+		name:Supercool
+		desc:Jubba chills out, to code in a powerful upgrade for his effects to help you win.<//><b>Effect:</b><.>Jubba effects are 4 times more powerful
+		icon:icons[2,8]
+		cost:25 goldcoins
+		req:10 goldcoins:earned
+		
+	*empowered
+		name:Empowered
+		desc:Generator was turbocharged by engineers whose gonna help you get bluecoins faster, this is clutch!<//><b>Effect:</b><.>Doubles click power
+		icon:icons[2,9]
+		cost:10 goldcoins
+    passive:multiply bluecoin yield of bluecoinButton by 2
+		req:5 goldcoins:earned
+		
+Achievements
+	*TEMPLATE
+		on click:anim glow
+		
+	*bluecoinAchiev1
+		name:First blue coin
+		desc:Have <b>1</b> blue coins.
+		req:1 bluecoin
+		icon:icons[2,4] icons[0,2] icons[0,6]
+	*bluecoinAchiev2
+		name:Let's Go!
+		desc:Have <b>1000</b> blue coins.
+		req:1000 bluecoins
+		icon:icons[2,4] icons[0,3] icons[0,6]
+	*bluecoinAchiev3
+		name:Coin Generator
+		desc:Have <b>1000000</b> blue coins.
+		req:1000000 bluecoins
+		icon:icons[2,4] icons[0,4] icons[0,6]
+  *bluecoinAchiev4
+		name:Clone Workforces
+		desc:Have <b>1000000000</b> blue coins.
+		req:1000000000 bluecoins
+		icon:icons[2,4] icons[0,5] icons[0,6]
+  *bluecoinAchiev5
+		name:Moneymaking
+		desc:Have <b>1000000000</b> blue coins.
+		req:1000000000000 bluecoins
+		icon:icons[2,4] icons[0,6] icons[0,6]
+		
+	*clickAchiev1
+		name:Generation
+		desc:Click the generator <b>10</b> times.
+		req:10 bluecoinButton clicks
+		icon:icons[2,2] icons[0,2] icons[0,6]
+	*clickAchiev2
+		name:Pumped Up
+		desc:Click the generator <b>100</b> times.
+		req:100 bluecoinButton clicks
+		icon:icons[2,2] icons[0,3] icons[0,6]
+	*clickAchiev3
+		name:Supercharged
+		desc:Click the generator <b>1000</b> times.
+		req:1000 bunnyButton clicks
+		icon:icons[2,2] icons[0,4] icons[0,6]
+		
+	*bluecoinPsAchiev1
+		name:Small Production
+		desc:Produce <b>10</b> blue coins per second.
+		req:10 bluecoins per second
+		icon:icons[2,3] icons[0,2] icons[0,6]
+	*bluecoinPsAchiev2
+		name:Medium Production
+		desc:Produce <b>1000</b> blue coins per second.
+		req:1000 bluecoins per second
+		icon:icons[2,3] icons[0,3] icons[0,6]
+	*bluecoinPsAchiev3
+		name:Big Production
+		desc:Produce <b>1000000</b> blue coins per second.
+		req:1000000 bluecoins per second
+		icon:icons[2,3] icons[0,4] icons[0,6]
+		
+	*goldcoinAchiev1
+		name:Thanks Jubba!
+		desc:Have <b>1</b> gold coin.
+		req:1 goldcoin
+		icon:icons[0,1] icons[0,2]
+	*goldcoinAchiev2
+		name:So Golden
+		desc:Have <b>100</b> gold coins.
+		req:100 goldcoins
+		icon:icons[0,1] icons[0,3]
+	*goldcoinAchiev3
+		name:So Value
+		desc:Have <b>1000</b> gold coins.
+		req:1000 goldcoins
+		icon:icons[0,1] icons[0,4]
+	
+	*fortressAchiev
+		name:Freedom!
+		desc:Complete building the <b>freedom fortress</b>.<//>This is it. You beat the game!
+		req:100 fortress
+		icon:icons[3,8] icons[0,4]
