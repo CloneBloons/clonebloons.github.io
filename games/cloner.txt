@@ -120,7 +120,7 @@ Buildings
 		cost:8000 bluecoins
                 on tick:yield 300 bluecoins
                 req:1 marksman
-                cost increase:122.5%
+                cost increase:122%
 		
 	*pyro|pyros
 		name:Pyro|Pyros
