@@ -1,7 +1,7 @@
 Let's make a game!
 	name:Clone Armies Clicker
 	by:Clone Bloons
-	desc:This is a simple idle game to showcase some of the basic functionalities of Idle Game Maker.<//>Generate blue coins and clone!
+	desc:This is the idle game you've ever wanted for Clone Armies.<//>Generate blue coins and clone!
 	created:19/2/2021
 	updated:19/2/2021
 	version:1
