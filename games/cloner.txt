@@ -135,7 +135,7 @@ Buildings
 		name:Powerup|Powerups
 		desc:Get this upgrade to bring mayhem to your clones and clicks!<//><b>Effect:</b><.>Doubles everything and doubles click power
 		cost:1000000
-    passive:multiply bluecoin yield of bluecoinButton by 2
+                passive:multiply bluecoin yield of bluecoinButton by 2
 		passive:multiply yield of bluecoins by 2
                 req:100000 bluecoins:earned
                 limit:10
@@ -219,7 +219,7 @@ Upgrades
 		desc:All your clones and generator taps are gonna be supercharged for quick blue coins!<//><b>Effect:</b><.>Everything 50% more powerful
 		icon:icons[2,7]
 		cost:5 goldcoins
-    passive:multiply yield of bluecoins by 1.5
+                passive:multiply yield of bluecoins by 1.5
 		req:1 goldcoin:earned
 		
 	*supercool
@@ -234,7 +234,7 @@ Upgrades
 		desc:Generator was turbocharged by engineers whose gonna help you get bluecoins faster, this is clutch!<//><b>Effect:</b><.>Doubles click power
 		icon:icons[2,9]
 		cost:10 goldcoins
-    passive:multiply bluecoin yield of bluecoinButton by 2
+                passive:multiply bluecoin yield of bluecoinButton by 2
 		req:5 goldcoins:earned
 		
 Achievements
@@ -280,7 +280,7 @@ Achievements
 	*clickAchiev3
 		name:Supercharged
 		desc:Click the generator <b>1000</b> times.
-		req:1000 bunnyButton clicks
+		req:1000 bluecoinButton clicks
 		icon:icons[2,2] icons[0,4] icons[0,6]
 		
 	*bluecoinPsAchiev1
