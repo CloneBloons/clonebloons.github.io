@@ -1,0 +1,644 @@
+Let's make a game!
+	name:Clone Armies Clicker
+	by:Clone Bloons
+	desc:This is the idle game you've ever wanted for Clone Armies.<//>Generate blue coins and clone!
+	created:19/2/2021
+	updated:21/2/2021
+	version:2
+
+Settings
+    building cost increase:115%
+	building cost refund:50%
+    stylesheet:stuff/bigBlue.css
+
+Layout
+	use default
+		
+Buttons
+	*bluecoinButton
+		name:Generate Blue Coins
+		desc:Click on the generator to make blue coins!
+		on click:yield 1 bluecoin
+		on click:if (have goldenTouch and chance(1%)) yield 1 goldcoin
+		icon:https://raw.githubusercontent.com/CloneBloons/CloneClicker/main/Generator.png
+		no text
+		class:bigButton hasFlares
+		icon class:shadowed
+		tooltip origin:bottom
+		tooltip class:red
+		
+Resources
+	*bluecoin|bluecoins
+        name:Blue Coin|Blue Coins
+		desc:Blue coins are your resource. You need them to clone your army and upgrade!
+		class:noBackground
+		show earned
+		
+	*goldcoin|goldcoins
+		name:Gold Coin|Gold Coins
+		desc:These coins are rare, but possible to find! They are usefully to be honest.
+		class:noBackground
+		hidden when 0
+		
+Shinies
+	*jubba
+		on click:log Woop
+		movement:onRight moveLeft fade bounce:0.05
+		frequency:60
+		frequency variation:30
+		class:bigButton
+        icon:https://raw.githubusercontent.com/CloneBloons/CloneClicker/main/Jubba.png
+		on click:
+			$boost=1
+			if (have supercool) $boost=4
+			if (chance(25%))
+				//get at least 7, or between 1 and 3 minutes of our blue coin production
+				$amount=max(7,random(bluecoins:ps*60*1,bluecoins:ps*60*3))*$boost
+				toast Jubba gave you<//><b>[$amount] blue coins</b>.
+				yield $amount bluecoins
+			else
+				$amount=1*$boost
+				toast Jubba gave you<//><b>[$amount] gold coin[s?$amount]</b>!
+				yield $amount goldcoins
+			end
+		end
+
+Buildings
+	*TEMPLATE
+		on click:anim glow
+		
+	*private|privates
+		name:Private|Privates
+		desc:Private is your basic clone. Although he helps you battle enemy clones for blue coins.<//><b>Effect:</b><.>Earns 1 blue coin every second.
+		cost:10 bluecoins
+		on tick:yield 1 bluecoin
+		unlocked
+	
+	*commando|commandos
+		name:Commando|Commandos
+		desc:Commando is a specialist and he's a assassin that'll hurt enemies badly with his swords.<//><b>Effect:</b><.>Earns 5 blue coins every second.
+		cost:25 bluecoins
+		on tick:yield 5 bluecoins
+		req:1 private
+        cost increase:150%
+	
+	*cadet|cadets
+		name:Cadet|Cadets
+		desc:Thanks to extensive training, Cadet can aim his weapon at his enemies even if he's standing on the ground or platform.<//><b>Effect:</b><.>Earns 10 blue coins every second.
+		cost:100 bluecoins
+		on tick:yield 10 bluecoins
+		req:1 commando
+        cost increase:145%
+	
+	*infantry|infantrymen
+		name:Infantry|Infantrymen
+		desc:Armed with a deadly shotgun, Infantryman is the best at taking down squishy clones.<//><b>Effect:</b><.>Earns 40 blue coins every second.
+		cost:500 bluecoins
+		on tick:yield 40 bluecoins
+		req:1 cadet
+        cost increase:140%
+	
+	*marksman|marksmen
+		name:Marksman|Marksmen
+		desc:When it comes to shooting, Marksman is one of the best sharpshooters. He can hit everything including enemies with a red hat on miles away.<//><b>Effect:</b><.>Earns 100 blue coins every second.
+		cost:2000 bluecoins
+		on tick:yield 100 bluecoins
+		req:1 infantry
+        cost increase:135%
+	
+	*defender|defenders
+		name:Defender|Defenders
+		desc:This tough guy with a shield is almost unstoppable, he can reflect all bullets and shoot down enemies.<//><b>Effect:</b><.>Earns 300 blue coins every second.
+		cost:8000 bluecoins
+        on tick:yield 300 bluecoins
+        req:1 marksman
+        cost increase:130%
+		
+	*pyro|pyros
+		name:Pyro|Pyros
+		desc:Don't mess with Pyro! His flamethrower's that strong to melt enemies and or... you.<//><b>Effect:</b><.>Earns 750 blue coins every second.
+		cost:30000 bluecoins
+        on tick:yield 750 bluecoins
+        req:1 defender
+        cost increase:125%
+
+    *butcher|butchers
+		name:Butcher|Butchers
+		desc:Butcher is even more dangerous than Commando, he shreds his enemies into bits with his chainsaw. His nickname is well earned but he also shreds wood down.<//><b>Effect:</b><.>Earns 3,000 blue coins every second.
+		cost:175000 bluecoins
+        on tick:yield 3000 bluecoins
+        req:1 pyro
+        cost increase:120%
+		
+	*powerup|powerups
+		name:Powerup|Powerups
+		desc:Get this upgrade to bring mayhem to your clones and clicks!<//><b>Effect:</b><.>+1 multiplier to clicks and production
+		cost:1000000 bluecoins
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		passive:multiply yield of bluecoins by 2
+        req:100000 bluecoins:earned
+        limit:10
+        cost increase:10000%
+		
+Upgrades
+	*TEMPLATE
+		on click:anim glow
+    
+   //click upgrades
+	
+	*clicker1
+		name:Clicker I
+		desc:Generator's power is 10%.<//><b>Effect:</b><.>+1 blue coin/click
+		cost:50 bluecoins
+		passive:increase bluecoin yield of bluecoinButton by 1
+		req:10 bluecoins:earned
+		
+	*clicker2
+		name:Clicker II
+		desc:Generator's power is 20%.<//><b>Effect:</b><.>+1 blue coin/click
+		cost:100 bluecoins
+		passive:increase bluecoin yield of bluecoinButton by 1
+		req:50 bluecoins:earned
+		
+	*clicker3
+		name:Clicker III
+		desc:Generator's power is 30%.<//><b>Effect:</b><.>+2 blue coins/click
+		cost:250 bluecoins
+		passive:increase bluecoin yield of bluecoinButton by 2
+		req:100 bluecoins:earned
+		
+	*clicker4
+		name:Clicker IV
+		desc:Generator's power is 40%.<//><b>Effect:</b><.>+2 blue coins/click
+		cost:500 bluecoins
+		passive:increase bluecoin yield of bluecoinButton by 2
+		req:250 bluecoins:earned
+		
+	*clicker5
+		name:Clicker V
+		desc:Generator's power is 50%.<//><b>Effect:</b><.>Double blue coins/click
+		cost:1000 bluecoins
+		passive:multiply bluecoin yield of bluecoinButton by 2
+		req:500 bluecoins:earned
+    
+    *clicker6
+		name:Clicker VI
+		desc:Generator's power is 60%.<//><b>Effect:</b><.>Triple blue coins/click
+		cost:5000 bluecoins
+		passive:multiply bluecoin yield of bluecoinButton by 3
+		req:2500 bluecoins:earned
+
+    *clicker7
+		name:Clicker VII
+		desc:Generator's power is 70%.<//><b>Effect:</b><.>Quadruple blue coins/click
+		cost:25000 bluecoins
+		passive:multiply bluecoin yield of bluecoinButton by 4
+		req:12500 bluecoins:earned
+
+    *clicker8
+		name:Clicker VIII
+		desc:Generator's power is 80%.<//><b>Effect:</b><.>Double blue coins/click
+		cost:75000 bluecoins
+		passive:multiply bluecoin yield of bluecoinButton by 2
+		req:37500 bluecoins:earned
+
+    *clicker9
+		name:Clicker IX
+		desc:Generator's power is 90%.<//><b>Effect:</b><.>Double blue coins/click
+		cost:200000 bluecoins
+		passive:multiply bluecoin yield of bluecoinButton by 2
+		req:100000 bluecoins:earned
+
+    *clicker10
+		name:Clicker X
+		desc:Generator's power is 100%.<//><b>Effect:</b><.>Quintuple blue coins/click
+		cost:1000000 bluecoins
+		passive:multiply bluecoin yield of bluecoinButton by 5
+		req:500000 bluecoins:earned
+	
+	//clone upgrades
+	
+	*private1
+		name:Private I
+		desc:Privates are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Private's blue coins/sec
+		cost:1000 bluecoins
+		passive:multiply yield of privates by 2
+		req:(privates>=10)
+
+    *private2
+		name:Private II
+		desc:Privates are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Private's blue coins/sec
+		cost:5000 bluecoins
+		passive:multiply yield of privates by 2
+		req:(privates>=25)
+
+    *private3
+		name:Private III
+		desc:Privates are upgraded and they are stronger.<//><b>Effect:</b><.>Triples Private's blue coins/sec
+		cost:50000 bluecoins
+		passive:multiply yield of privates by 3
+		req:(privates>=50)
+
+    *private4
+		name:Private IV
+		desc:Privates are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Private's blue coins/sec
+		cost:350000 bluecoins
+		passive:multiply yield of privates by 2
+		req:(privates>=75)
+
+    *private5
+		name:Private V
+		desc:Privates are upgraded and they are stronger.<//><b>Effect:</b><.>Triples Private's blue coins/sec
+		cost:5000000 bluecoins
+		passive:multiply yield of privates by 3
+		req:(privates>=100)
+
+    *commando1
+		name:Commando I
+		desc:Commandos are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Commando's blue coins/sec
+		cost:10000 bluecoins
+		passive:multiply yield of commandos by 2
+		req:(commandos>=10)
+
+    *commando2
+		name:Commando II
+		desc:Commandos are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Commando's blue coins/sec
+		cost:500000 bluecoins
+		passive:multiply yield of commandos by 2
+		req:(commandos>=25)
+
+    *commando3
+		name:Commando III
+		desc:Commandos are upgraded and they are stronger.<//><b>Effect:</b><.>Quintuples Commando's blue coins/sec
+		cost:1000000000 bluecoins
+		passive:multiply yield of commandos by 5
+		req:(commandos>=50)
+
+    *cadet1
+		name:Cadet I
+		desc:Cadets are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Cadet's blue coins/sec
+		cost:25000 bluecoins
+		passive:multiply yield of cadets by 2
+		req:(cadets>=10)
+
+    *cadet2
+		name:Cadet II
+		desc:Cadets are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Cadet's blue coins/sec
+		cost:1000000 bluecoins
+		passive:multiply yield of cadets by 2
+		req:(cadets>=25)
+
+    *cadet3
+		name:Cadet III
+		desc:Cadets are upgraded and they are stronger.<//><b>Effect:</b><.>Quintuples Cadet's blue coins/sec
+		cost:1000000000 bluecoins
+		passive:multiply yield of cadets by 5
+		req:(cadets>=50)
+
+    *infantry1
+		name:Infantry I
+		desc:Infantrymen are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Infantry's blue coins/sec
+		cost:100000 bluecoins
+		passive:multiply yield of infantrymen by 2
+		req:(infantrymen>=10)
+
+    *infantry2
+		name:Infantry II
+		desc:Infantrymen are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Infantry's blue coins/sec
+		cost:3000000 bluecoins
+		passive:multiply yield of infantrymen by 2
+		req:(infantrymen>=25)
+
+    *infantry3
+		name:Infantry III
+		desc:Infantrymen are upgraded and they are stronger.<//><b>Effect:</b><.>Quintuples Infantry's blue coins/sec
+		cost:2000000000 bluecoins
+		passive:multiply yield of infantrymen by 5
+		req:(infantrymen>=50)
+
+    *marksman1
+		name:Marksman I
+		desc:Marksmen are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Marksman's blue coins/sec
+		cost:350000 bluecoins
+		passive:multiply yield of marksmen by 2
+		req:(marksmen>=10)
+
+    *marksman2
+		name:Marksman II
+		desc:Marksmen are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Marksman's blue coins/sec
+		cost:8500000 bluecoins
+		passive:multiply yield of marksmen by 2
+		req:(marksmen>=25)
+
+    *marksman3
+		name:Marksman III
+		desc:Marksmen are upgraded and they are stronger.<//><b>Effect:</b><.>Quintuples Marksman's blue coins/sec
+		cost:3000000000 bluecoins
+		passive:multiply yield of marksmen by 5
+		req:(marksmen>=50)
+
+    *defender1
+		name:Defender I
+		desc:Defenders are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Defender's blue coins/sec
+		cost:1000000 bluecoins
+		passive:multiply yield of defenders by 2
+		req:(defenders>=10)
+
+    *defender2
+		name:Defender II
+		desc:Defenders are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Defender's blue coins/sec
+		cost:25000000 bluecoins
+		passive:multiply yield of defenders by 2
+		req:(defenders>=25)
+
+    *defender3
+		name:Defender III
+		desc:Defenders are upgraded and they are stronger.<//><b>Effect:</b><.>Quintuples Defender's blue coins/sec
+		cost:5000000000 bluecoins
+		passive:multiply yield of defenders by 5
+		req:(defenders>=50)
+
+    *pyro1
+		name:Pyro I
+		desc:Pyros are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Pyro's blue coins/sec
+		cost:5000000 bluecoins
+		passive:multiply yield of pyros by 2
+		req:(pyros>=10)
+
+    *pyro2
+		name:Pyro II
+		desc:Pyros are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Pyro's blue coins/sec
+		cost:75000000 bluecoins
+		passive:multiply yield of pyros by 2
+		req:(pyros>=25)
+
+    *pyro3
+		name:Pyro III
+		desc:Pyros are upgraded and they are stronger.<//><b>Effect:</b><.>Quintuples Pyro's blue coins/sec
+		cost:7500000000 bluecoins
+		passive:multiply yield of pyros by 5
+		req:(pyros>=50)
+
+    *butcher1
+		name:Butcher I
+		desc:Butchers are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Butcher's blue coins/sec
+		cost:15000000 bluecoins
+		passive:multiply yield of butchers by 2
+		req:(butchers>=10)
+
+    *butcher2
+		name:Butcher II
+		desc:Butchers are upgraded and they are stronger.<//><b>Effect:</b><.>Doubles Butcher's blue coins/sec
+		cost:250000000 bluecoins
+		passive:multiply yield of butchers by 2
+		req:(butchers>=25)
+
+    *butcher3
+		name:Butcher III
+		desc:Butchers are upgraded and they are stronger.<//><b>Effect:</b><.>Quadruples Butcher's blue coins/sec
+		cost:10000000000 bluecoins
+		passive:multiply yield of butchers by 4
+		req:(butchers>=50)
+
+	//gold coin upgrades
+	
+	*goldenTouch
+		name:Golden touch
+		desc:Powerfully generator touch with a super low chance.<//><b>Effect:</b><.>1% chance of gaining 1 golden coin per generator click
+		cost:1 goldcoin
+		req:1 goldcoin:earned
+		
+	*Jubbad
+		name:You were Jubbad
+		desc:Jubba's gonna find you. Jubba's gonna ban you.<//><b>Effect:</b><.>Jubbas appear 25% more often
+		passive:multiply frequency of jubba by 0.75
+		cost:5 goldcoins
+		req:1 goldcoin:earned
+	
+	*extraPower
+		name:Extra Power
+		desc:All your clones and generator taps are gonna be supercharged for quick blue coins!<//><b>Effect:</b><.>Everything 50% more powerful
+		cost:5 goldcoins
+        passive:multiply yield of bluecoins by 1.5
+		req:1 goldcoin:earned
+		
+	*supercool
+		name:Supercool
+		desc:Jubba chills out, to code in a powerful upgrade for his effects to help you win.<//><b>Effect:</b><.>Jubba effects are 4 times more powerful
+		cost:25 goldcoins
+		req:10 goldcoins:earned
+		
+	*empowered
+		name:Empowered
+		desc:Generator was turbocharged by engineers whose gonna help you get bluecoins faster, this is clutch!<//><b>Effect:</b><.>Doubles click power
+		cost:10 goldcoins
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		req:5 goldcoins:earned
+
+    *quickfire
+		name:Quick-fire
+		desc:All clones trained and they now fire weapons and perform gunfire faster!<//><b>Effect:</b><.>Clones 50% more powerful
+		cost:15 goldcoins
+        passive:multiply yield of privates by 1.5
+        passive:multiply yield of commandos by 1.5
+        passive:multiply yield of cadets by 1.5
+        passive:multiply yield of infantrymen by 1.5
+        passive:multiply yield of marksmen by 1.5
+        passive:multiply yield of defenders by 1.5
+        passive:multiply yield of pyros by 1.5
+        passive:multiply yield of butchers by 1.5
+		req:10 goldcoins:earned
+		
+Achievements
+	*TEMPLATE
+		on click:anim glow
+		
+	*bluecoinAchiev1
+		name:First blue coin
+		desc:Have <b>1</b> blue coin.
+		req:1 bluecoin
+	*bluecoinAchiev2
+		name:Let's Go!
+		desc:Have <b>1,000</b> blue coins.
+		req:1000 bluecoins
+	*bluecoinAchiev3
+		name:Coin Generator
+		desc:Have <b>1 million</b> blue coins.
+		req:1000000 bluecoins
+  *bluecoinAchiev4
+		name:Clone Workforces
+		desc:Have <b>1 billion</b> blue coins.
+		req:1000000000 bluecoins
+  *bluecoinAchiev5
+		name:Moneymaking
+		desc:Have <b>1 trillion</b> blue coins.
+		req:1000000000000 bluecoins
+		
+	*clickAchiev1
+		name:Generation
+		desc:Click the generator <b>10</b> times.
+		req:10 bluecoinButton clicks
+	*clickAchiev2
+		name:Pumped Up
+		desc:Click the generator <b>100</b> times.
+		req:100 bluecoinButton clicks
+	*clickAchiev3
+		name:Supercharged
+		desc:Click the generator <b>1,000</b> times.
+		req:1000 bluecoinButton clicks
+    *clickAchiev4
+		name:Overcharged Generator
+		desc:Click the generator <b>10,000</b> times.
+		req:10000 bluecoinButton clicks
+		
+	*bluecoinPsAchiev1
+		name:Small Production
+		desc:Produce <b>10</b> blue coins per second.
+		req:10 bluecoins per second
+	*bluecoinPsAchiev2
+		name:Medium Production
+		desc:Produce <b>1,000</b> blue coins per second.
+		req:1000 bluecoins per second
+	*bluecoinPsAchiev3
+		name:Big Production
+		desc:Produce <b>1 million</b> blue coins per second.
+		req:1000000 bluecoins per second
+    *bluecoinPsAchiev4
+		name:Large Production
+		desc:Produce <b>1 billion</b> blue coins per second.
+		req:1000000000 bluecoins per second
+		
+	*goldcoinAchiev1
+		name:Thanks Jubba!
+		desc:Have <b>1</b> gold coin.
+		req:1 goldcoin
+	*goldcoinAchiev2
+		name:So Golden
+		desc:Have <b>10</b> gold coins.
+		req:10 goldcoins
+	*goldcoinAchiev3
+		name:So Value
+		desc:Have <b>100</b> gold coins.
+		req:100 goldcoins
+
+    *privateAchiev1
+		name:First Private
+		desc:Have <b>1</b> private.
+		req:1 private
+    *privateAchiev2
+		name:Fifty Privates
+		desc:Have <b>50</b> privates.
+		req:50 privates
+    *privateAchiev3
+		name:Hundred Privates
+		desc:Have <b>100</b> privates. Your generator click power is <b>doubled</b>.
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		req:100 privates
+    *privateAchiev4
+		name:Two Hundred Privates
+		desc:Have <b>200</b> privates. Your generator click power is <b>doubled</b>.
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		req:200 privates
+    
+    *commandoAchiev1
+		name:First Commando
+		desc:Have <b>1</b> commando.
+		req:1 commando
+    *commandoAchiev2
+		name:Fifty Commandos
+		desc:Have <b>50</b> commandos.
+		req:50 commandos
+    *commandoAchiev3
+		name:Hundred Commandos
+		desc:Have <b>100</b> commandos. Your generator click power is <b>doubled</b>.
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		req:100 commandos
+
+    *cadetAchiev1
+		name:First Cadet
+		desc:Have <b>1</b> cadet.
+		req:1 cadet
+    *cadetAchiev2
+		name:Fifty Cadets
+		desc:Have <b>50</b> cadets.
+		req:50 cadets
+    *cadetAchiev3
+		name:Hundred Cadets
+		desc:Have <b>100</b> cadets. Your generator click power is <b>doubled</b>.
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		req:100 cadets
+    
+    *infantryAchiev1
+		name:First Infantryman
+		desc:Have <b>1</b> infantry.
+		req:1 infantry
+    *infantryAchiev2
+		name:Fifty Infantrymen
+		desc:Have <b>50</b> infantrymen.
+		req:50 infantrymen
+    *infantryAchiev3
+		name:Hundred Infantrymen
+		desc:Have <b>100</b> infantrymen. Your generator click power is <b>doubled</b>.
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		req:100 infantrymen
+
+    *marksmanAchiev1
+		name:First Marksman
+		desc:Have <b>1</b> marksman.
+		req:1 marksman
+    *marksmanAchiev2
+		name:Fifty Marksmen
+		desc:Have <b>50</b> marksmen.
+		req:50 marksmen
+    *marksmanAchiev3
+		name:Hundred Marksmen
+		desc:Have <b>100</b> marksmen. Your generator click power is <b>doubled</b>.
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		req:100 marksmen
+
+    *defenderAchiev1
+		name:First Defender
+		desc:Have <b>1</b> defender.
+		req:1 defender
+    *defenderAchiev2
+		name:Fifty Defenders
+		desc:Have <b>50</b> defenders.
+		req:50 defenders
+    *defenderAchiev3
+		name:Hundred Defenders
+		desc:Have <b>100</b> defenders. Your generator click power is <b>doubled</b>.
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		req:100 defenders
+
+    *pyroAchiev1
+		name:First Pyro
+		desc:Have <b>1</b> pyro.
+		req:1 pyro
+    *pyroAchiev2
+		name:Fifty Pyros
+		desc:Have <b>50</b> pyros.
+		req:50 pyros
+    *pyroAchiev3
+		name:Hundred Pyros
+		desc:Have <b>100</b> pyros. Your generator click power is <b>doubled</b>.
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		req:100 pyros
+
+    *butcherAchiev1
+		name:First Butcher
+		desc:Have <b>1</b> butcher.
+		req:1 butcher
+    *butcherAchiev2
+		name:Fifty Butchers
+		desc:Have <b>50</b> butchers.
+		req:50 butchers
+    *butcherAchiev3
+		name:Hundred Butchers
+		desc:Have <b>100</b> butchers. Your generator click power is <b>doubled</b>.
+        passive:multiply bluecoin yield of bluecoinButton by 2
+		req:100 butchers
+	
+	*powerAchiev
+		name:Ultimate Power
+		desc:Powerup 10 times.</b>.<//>This is it. You beat the game!
+		req:10 powerups
